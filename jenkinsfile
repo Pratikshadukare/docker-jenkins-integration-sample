@@ -1,7 +1,26 @@
 pipeline {
     agent any
-
-    stages {
+        stages {
+        stage('Build') {
+            steps {
+                echo 'Building the project...'
+                // Add your build commands here
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                // Add your test commands here
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the project...'
+                // Add your deployment commands here
+            }
+        }
         stage('Commit') {
             steps {
                 // Commit the Java code to a version control system (e.g., Git)
