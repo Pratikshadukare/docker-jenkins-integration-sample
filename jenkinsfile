@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Commit') {
+            steps {
+                // Commit the Java code to a version control system (e.g., Git)
+                // You can use the appropriate Git commands or Git plugin in Jenkins
+                // to perform the commit operation.
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                dir('my-app') {
+                    sh 'mvn clean package'
+                }
+            }
+        }
+        
+        stage('Docker Build & Push') {
+            steps {
+                script {
+                    docker.withRegistry('https://hub.docker.com/repository/docker/pratikshabai/', 'docker_cred') {
+                        // Build the Docker image from the Java code
+                        def dockerImage = docker.build('pratikshabai/image-name:tag', './docker-jenkins-integration-sample')
+                        
+                        // Push the Docker image to Docker Hub
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
