@@ -30,20 +30,6 @@ pipeline {
                 // Add your deployment commands here
             }
         }
-        
-        stage('Docker Build & Push') {
-            steps {
-                script {
-                    docker.withRegistry('https://hub.docker.com/repository/docker/pratikshabai/', 'docker_cred') {
-                        // Build the Docker image from the Java code
-                        def dockerImage = docker.build('pratikshabai/image-name:tag', './docker-jenkins-integration-sample')
-                        
-                        // Push the Docker image to Docker Hub
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
     }
     
     post {
