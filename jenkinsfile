@@ -1,15 +1,7 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Commit') {
-            steps {
-                // Commit the Java code to a version control system (e.g., Git)
-                // You can use the appropriate Git commands or Git plugin in Jenkins
-                // to perform the commit operation
-            }
-        }
-        
+    stages {     
         stage('Build') {
             steps {
                 echo 'Building the project...'
