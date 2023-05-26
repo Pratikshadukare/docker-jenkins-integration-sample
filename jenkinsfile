@@ -14,7 +14,9 @@ pipeline {
         stage('Build docker image') {
             steps {
                 script {
-                    sh 'docker build -t pratikshabai/docker-jenkins-integration-sample:latestjava'
+                    sh 'docker build -t pratikshabai/docker-jenkins-integration-sample'
+
+                    //sh 'docker build -t pratikshabai/docker-jenkins-integration-sample:latestjava'
                 }
             }
         }
