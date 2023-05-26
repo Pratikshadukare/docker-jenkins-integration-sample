@@ -1,39 +1,35 @@
 pipeline {
+     
     agent any
-
-    stages {     
-        stage('Build') {
+    tools {
+        maven 'MAVEN'
+    }
+    stages {
+        stage('Build Maven') {
             steps {
-                echo 'Building the project...'
-                // Add your build commands here
-                // For example:
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Pratikshadukare/docker-jenkins-integration-sample
+']]])
                 sh 'mvn clean install'
             }
         }
-        
-        stage('Test') {
+        stage('Build docker image') {
             steps {
-                echo 'Running tests...'
-                // Add your test commands here
-                // For example:
-                sh 'mvn test'
+                script {
+                    sh 'docker build -t pratikshabai/docker-jenkins-integration-sample
+ .'
+                }
             }
         }
-        
-        stage('Deploy') {
+        stage('Push image to Hub') {
             steps {
-                echo 'Deploying the project...'
-                // Add your deployment commands here
-                // For example:
-                sh 'docker build -t my-app .'
-                sh 'docker run -d my-app'
+                script {
+                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                        sh "docker login -u pratikshabai -p ${dockerhubpwd}"
+                    }
+                    sh 'docker push pratikshabai/docker-jenkins-integration-sample
+'
+                }
             }
-        }
-    }
-    
-    post {
-        always {
-            cleanWs()
         }
     }
 }
