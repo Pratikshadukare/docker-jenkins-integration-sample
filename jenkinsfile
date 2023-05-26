@@ -7,16 +7,14 @@ pipeline {
     stages {
         stage('Build Maven') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Pratikshadukare/docker-jenkins-integration-sample
-']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Pratikshadukare/docker-jenkins-integration-sample']]])
                 sh 'mvn clean install'
             }
         }
         stage('Build docker image') {
             steps {
                 script {
-                    sh 'docker build -t pratikshabai/docker-jenkins-integration-sample
- .'
+                    sh 'docker build -t pratikshabai/docker-jenkins-integration-sample.'
                 }
             }
         }
@@ -26,8 +24,7 @@ pipeline {
                     withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
                         sh "docker login -u pratikshabai -p ${dockerhubpwd}"
                     }
-                    sh 'docker push pratikshabai/docker-jenkins-integration-sample
-'
+                    sh 'docker push pratikshabai/docker-jenkins-integration-sample'
                 }
             }
         }
