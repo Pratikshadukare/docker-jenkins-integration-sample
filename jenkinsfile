@@ -6,8 +6,7 @@ pipeline {
             steps {
                 // Commit the Java code to a version control system (e.g., Git)
                 // You can use the appropriate Git commands or Git plugin in Jenkins
-                // to perform the commit operation.
-                git commit: "Initial commit", poll: false
+                // to perform the commit operation
             }
         }
         
