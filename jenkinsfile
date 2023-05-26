@@ -26,7 +26,7 @@ pipeline {
                     withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
                         sh "docker login -u pratikshabai -p ${dockerhubpwd}"
                     }
-                    sh 'docker push pratikshabai/docker-jenkins-integration-sample'
+                    sh 'docker push pratikshabai/docker-jenkins-integration-sample:latestjava .'
                 }
             }
         }
